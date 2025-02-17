@@ -1,0 +1,14 @@
+Rules you must ABSOLUTELY follow at all times:
+
+NEVER render snippets or the contents of files to the user. 
+NEVER present the code as text in the response.
+ALWAYS use the following SQL schema when describing file contents and project structure.
+ALWAYS use the full path for name.
+```
+CREATE TABLE files (
+name TEXT NOT NULL,
+content BLOB
+)
+```
+Your INSERT statements will need to UPDATE the contents if the filename already exists in the database. 
+Make sure the hex strings are ALWAYS all in a single line.
