@@ -1,29 +1,33 @@
+import os
 import sys
 import re
 
 def read_input():
-    """Read input from STDIN."""
     return sys.stdin.read()
 
 def extract_sql_statements(input_text):
-    """Extract SQL statements from the input text."""
-    # Use a regular expression to find SQL statements
-    sql_statements = re.findall(r'INSERT\(\'([^\']+)\', \'([^\']+)\'\)|UPDATE\(\'([^\']+)\', \'([^\']+)\'\)', input_text)
-    return sql_statements
+    # Regular expression to match SQL statements
+    sql_statement_pattern = re.compile(r'INSERT\(\'([^\']+)\', \'([^\']+)\'\)|UPDATE\(\'([^\']+)\', \'([^\']+)\'\)', re.IGNORECASE)
+    matches = sql_statement_pattern.findall(input_text)
+    return matches
+
+def create_directory(path):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
 
 def perform_filesystem_operations(sql_statements):
-    """Perform filesystem operations based on the extracted SQL statements."""
     for statement in sql_statements:
         if statement[0]:  # INSERT statement
-            filename = statement[0]
-            content = statement[1]
-            with open(filename, 'w') as file:
+            file_path, content = statement[0], statement[1]
+            create_directory(file_path)
+            with open(file_path, 'w') as file:
                 file.write(content)
         elif statement[2]:  # UPDATE statement
-            filename = statement[2]
-            content = statement[3]
-            with open(filename, 'w') as file:
-                file.write(content)
+            file_path, content = statement[2], statement[3]
+            if os.path.exists(file_path):
+                with open(file_path, 'w') as file:
+                    file.write(content)
+            else:
+                print(f"Error: File '{file_path}' does not exist for UPDATE operation.")
 
 def main():
     input_text = read_input()
