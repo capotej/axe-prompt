@@ -1,1 +1,1 @@
-Write a python 3.11 program 'hello.py' that receives a name on STDIN and prints a greeting to the user with the given name.
+Write a python 3.11 program 'build/hello.py' that receives a name on STDIN and prints a greeting to the user with the given name.

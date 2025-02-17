@@ -9,9 +9,8 @@ content BLOB
 Once you have extracted the SQL statements into an array, go through that array and perform the relevant filesystem operations locally.
 
 For example:
-INSERT('file.txt', 'hi') would create a file named 'file.txt' with 'hi' as its contents.
-INSERT('foo/b/file.txt', 'hi') would create 'foo/b' directories (if necessary), then `foo/b/file.txt` with 'hi' as its contents.
-UPDATE('file.txt', 'hello') would update a file named 'file.txt' with 'hello' as its new contents.
+INSERT INTO files (name, content) VALUES ('foo/b/file.txt', b'hi'); would create 'foo/b' directories (if necessary), then `foo/b/file.txt` with 'hi' as its contents.
+UPDATE files SET content = 'hi' WHERE name = 'hi.txt';  would update a file named 'hi.txt' with 'hi' as its contents.
 
 Requirements:
 * Only use standard library available since python 3.11, no external dependencies
